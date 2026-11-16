@@ -1,4 +1,10 @@
-<?php $activePage = 'payments'; ?>
+<?php
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/functions.php';
+require_login();
+$activePage = 'payments';
+$student = current_student();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,9 +25,13 @@
                     <h1 class="dash-title">Payment successful</h1>
                     <p class="dash-subtitle">Your demo payment has been confirmed.</p>
                 </div>
+                <div class="dash-user-card">
+                    <span class="dash-avatar"><?= e($student['initials'] ?? '') ?></span>
+                    <span class="dash-user-details"><strong><?= e($student['name'] ?? '') ?></strong><span>Student account</span></span>
+                </div>
             </header>
             <section class="dash-panel success-panel">
-                <h2 class="dash-panel-title">Thank you, Lei Justin Clemente</h2>
+                <h2 class="dash-panel-title">Thank you, <?= e($student['name'] ?? '') ?></h2>
                 <p class="pay-terms">A GCash (demo) payment was recorded successfully.</p>
                 <a class="dash-pay-button success-link" href="../transaction-history/transaction-history.php">View transaction history</a>
             </section>

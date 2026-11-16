@@ -1,4 +1,10 @@
-<?php $activePage = 'my-account'; ?>
+<?php
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/functions.php';
+require_login();
+$activePage = 'my-account';
+$student = current_student();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,8 +26,8 @@
                     <p class="dash-subtitle">Your student profile and account balance.</p>
                 </div>
                 <div class="dash-user-card">
-                    <span class="dash-avatar">LC</span>
-                    <span class="dash-user-details"><strong>Lei Justin Clemente</strong><span>Student account</span></span>
+                    <span class="dash-avatar"><?= e($student['initials'] ?? '') ?></span>
+                    <span class="dash-user-details"><strong><?= e($student['name'] ?? '') ?></strong><span>Student account</span></span>
                 </div>
             </header>
             <section class="account-grid" aria-label="Student account details">

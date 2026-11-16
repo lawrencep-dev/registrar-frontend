@@ -1,26 +1,8 @@
 <?php
-session_start();
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/functions.php';
+require_login();
 date_default_timezone_set('Asia/Manila');
-
-function e(?string $value): string {
-  return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
-}
-
-function peso(float $amount): string {
-  return '₱ ' . number_format($amount, 2);
-}
-
-function csrf_field(): string {
-  $_SESSION['csrf'] ??= bin2hex(random_bytes(16));
-  return '<input type="hidden" name="csrf" value="' . e($_SESSION['csrf']) . '">';
-}
-
-function csrf_check(): void {
-  if (!hash_equals($_SESSION['csrf'] ?? '', (string)($_POST['csrf'] ?? ''))) {
-    http_response_code(400);
-    exit('Your session expired. Go back and try again.');
-  }
-}
 
 const FEES = [
   0 => ['Tuition fee', 15000.00],
@@ -30,6 +12,7 @@ const FEES = [
 
 $title = 'School Fees & Payment';
 $activePage = 'payments';
+$student = current_student();
 $fee = (int)($_POST['fee'] ?? $_GET['fee'] ?? 0);
 $fee = isset(FEES[$fee]) ? $fee : 0;
 $type = (string)($_POST['type'] ?? 'full');
@@ -37,7 +20,10 @@ $amount = (string)($_POST['amount'] ?? FEES[$fee][1]);
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  csrf_check();
+  if (!csrf_verify(isset($_POST['csrf']) ? (string)$_POST['csrf'] : null)) {
+    http_response_code(400);
+    exit('Your session expired. Go back and try again.');
+  }
   $amountValue = (float)preg_replace('/[^0-9.]/', '', $amount);
   $feeAmount = FEES[$fee][1];
 
@@ -80,13 +66,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="dash-subtitle">Choose the fee or amount you want to pay.</p>
                 </div>
                 <div class="dash-user-card">
-                    <span class="dash-avatar">LC</span>
-                    <span class="dash-user-details"><strong>Lei Justin Clemente</strong><span>Student account</span></span>
+                      <span class="dash-avatar"><?= e($student['initials'] ?? '') ?></span>
+                      <span class="dash-user-details"><strong><?= e($student['name'] ?? '') ?></strong><span>Student account</span></span>
                 </div>
             </header>
 
             <form class="acct-payment-layout" id="acct-payment-form" data-selected-fee="<?= $fee ?>" method="post" action="payment.php">
-                <?= csrf_field() ?>
+                <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
                 <section class="acct-details-card" aria-labelledby="acct-details-heading">
                     <h2 id="acct-details-heading">Payment details</h2>
                     <p class="acct-card-intro">Select the applicable school fee</p>
@@ -97,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="acct-fields-row">
                         <div class="acct-field-group">
                             <label for="acct-payment-amount">Payment amount</label>
-                            <input id="acct-payment-amount" name="amount" type="text" inputmode="decimal" value="<?= e(peso((float)$amount)) ?>" readonly autocomplete="off">
+                            <input id="acct-payment-amount" name="amount" type="text" inputmode="decimal" value="<?= e(money((float)$amount)) ?>" readonly autocomplete="off">
                         </div>
                         <div class="acct-field-group">
                             <label for="acct-payment-type">Payment type</label>

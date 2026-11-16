@@ -1,7 +1,12 @@
 <?php
-session_start();
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/functions.php';
+require_login();
 $activePage = 'payments';
-$_SESSION['csrf'] ??= bin2hex(random_bytes(16));
+$student = current_student();
+$csrfToken = csrf_token();
+$config = require __DIR__ . '/../includes/config.php';
+$convenienceFee = (float)$config['convenience_fee'];
 $draft = $_SESSION['payment_draft'] ?? ['fee' => 'Tuition fee', 'amount' => 15000.00];
 $amount = number_format((float)$draft['amount'], 2);
 ?>
@@ -26,12 +31,12 @@ $amount = number_format((float)$draft['amount'], 2);
                     <p class="dash-subtitle">Check your payment information before proceeding.</p>
                 </div>
                 <div class="dash-user-card">
-                    <span class="dash-avatar">LC</span>
-                    <span class="dash-user-details"><strong>Lei Justin Clemente</strong><span>Student account</span></span>
+                    <span class="dash-avatar"><?= e($student['initials'] ?? '') ?></span>
+                    <span class="dash-user-details"><strong><?= e($student['name'] ?? '') ?></strong><span>Student account</span></span>
                 </div>
             </header>
             <form method="post" action="success.php" class="review-form">
-                <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['csrf'], ENT_QUOTES, 'UTF-8') ?>">
+                <input type="hidden" name="csrf" value="<?= e($csrfToken) ?>">
                 <input type="hidden" name="fee" value="<?= htmlspecialchars($draft['fee'], ENT_QUOTES, 'UTF-8') ?>">
                 <input type="hidden" name="amount" value="<?= htmlspecialchars((string)$draft['amount'], ENT_QUOTES, 'UTF-8') ?>">
                 <input type="hidden" name="payment_method" value="GCash (demo)">
@@ -39,8 +44,8 @@ $amount = number_format((float)$draft['amount'], 2);
                     <section class="dash-panel pay-info" aria-label="Payment information">
                         <h2 class="dash-panel-title">Payment information</h2>
                         <dl class="pay-list">
-                            <div class="pay-row"><dt>Student name</dt><dd>Lei Justin Clemente</dd></div>
-                            <div class="pay-row"><dt>Student ID</dt><dd>2026-001284</dd></div>
+                            <div class="pay-row"><dt>Student name</dt><dd><?= e($student['name'] ?? '') ?></dd></div>
+                            <div class="pay-row"><dt>Student ID</dt><dd><?= e($student['student_number'] ?? '') ?></dd></div>
                             <div class="pay-row"><dt>Payment for</dt><dd><?= htmlspecialchars($draft['fee'], ENT_QUOTES, 'UTF-8') ?></dd></div>
                             <div class="pay-row"><dt>Payment method</dt><dd>GCash (demo)</dd></div>
                         </dl>
@@ -49,11 +54,11 @@ $amount = number_format((float)$draft['amount'], 2);
                         <section class="dash-panel pay-total" aria-label="Payment total">
                             <h2 class="dash-panel-title">Payment total</h2>
                             <p class="pay-label">Amount</p>
-                            <p class="pay-amount">₱ <?= $amount ?></p>
+                            <p class="pay-amount"><?= e(money((float)$draft['amount'])) ?></p>
                             <p class="pay-label">Convenience fee</p>
-                            <p class="pay-fee">₱ 0.00</p>
+                            <p class="pay-fee"><?= e(money($convenienceFee)) ?></p>
                             <p class="pay-label">Total to pay</p>
-                            <p class="pay-grand">₱ <?= $amount ?></p>
+                            <p class="pay-grand"><?= e(money((float)$draft['amount'] + $convenienceFee)) ?></p>
                         </section>
                         <label class="pay-check"><input type="checkbox" name="confirm" value="1" required> I confirm that the payment details above are correct.</label>
                         <button class="dash-pay-button pay-confirm" type="submit">Confirm payment</button>

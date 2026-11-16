@@ -1,4 +1,10 @@
-<?php $activePage = 'transaction-history'; ?>
+<?php
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/functions.php';
+require_login();
+$activePage = 'transaction-history';
+$student = current_student();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,9 +27,9 @@
                     <p class="dash-subtitle">Review your recent payment activity.</p>
                 </div>
                 <div class="dash-user-card">
-                    <span class="dash-avatar">LC</span>
+                    <span class="dash-avatar"><?= e($student['initials'] ?? '') ?></span>
                     <span class="dash-user-details">
-                        <strong>Lei Justin Clemente</strong>
+                        <strong><?= e($student['name'] ?? '') ?></strong>
                         <span>Student account</span>
                     </span>
                 </div>
