@@ -87,9 +87,9 @@ function student_balance_summary(int $studentId): array {
         'SELECT
             COALESCE(SUM(sc.amount), 0) AS total_charges,
             COALESCE(SUM(COALESCE(p.paid_amount, 0)), 0) AS total_paid,
-            COALESCE(SUM(sc.amount - COALESCE(p.paid_amount, 0)), 0) AS balance,
+                COALESCE(SUM(GREATEST(sc.amount - COALESCE(p.paid_amount, 0), 0)), 0) AS balance,
             COUNT(sc.id) AS charge_count,
-            MIN(CASE WHEN sc.status IN (\'unpaid\', \'partial\') THEN sc.due_date END) AS next_due_date
+                MIN(CASE WHEN sc.amount > COALESCE(p.paid_amount, 0) THEN sc.due_date END) AS next_due_date
          FROM student_charges sc
          LEFT JOIN (
             SELECT student_charge_id, SUM(amount) AS paid_amount
@@ -121,4 +121,9 @@ function charge_status_label(string $status): string {
         'paid' => 'Paid',
         default => 'Unpaid',
     };
+}
+
+function peso($amount)
+{
+    return '₱ ' . number_format((float) $amount, 2);
 }

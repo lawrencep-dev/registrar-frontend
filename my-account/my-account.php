@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/functions.php';
 require_login();
 $activePage = 'my-account';
 $student = current_student();
+$balanceSummary = student_balance_summary((int)($student['id'] ?? 0));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,16 +35,16 @@ $student = current_student();
                 <article class="dash-panel account-panel">
                     <h2 class="dash-panel-title">Profile</h2>
                     <dl class="account-details">
-                        <div><dt>Student name</dt><dd>Lei Justin Clemente</dd></div>
-                        <div><dt>Student number</dt><dd>2026-001284</dd></div>
-                        <div><dt>Email</dt><dd>lei.clemente@example.com</dd></div>
+                        <div><dt>Student name</dt><dd><?= e($student['name'] ?? '') ?></dd></div>
+                        <div><dt>Student number</dt><dd><?= e($student['student_number'] ?? '') ?></dd></div>
+                        <div><dt>Email</dt><dd><?= e($student['email'] ?? '') ?></dd></div>
                     </dl>
                 </article>
                 <article class="dash-panel account-panel">
                     <h2 class="dash-panel-title">Balance summary</h2>
                     <p class="dash-card-label account-balance-label">Outstanding balance</p>
-                    <p class="dash-stat-value">₱18,500.00</p>
-                    <p class="dash-stat-note">Due date: November 30, 2026</p>
+                    <p class="dash-stat-value"><?= e(money($balanceSummary['balance'])) ?></p>
+                    <p class="dash-stat-note"><?php if ($balanceSummary['balance'] > 0 && $balanceSummary['next_due_date'] !== null): ?>Due date: <?= e(date('F j, Y', strtotime((string)$balanceSummary['next_due_date']))) ?><?php else: ?>No balance due<?php endif; ?></p>
                 </article>
             </section>
         </div>
