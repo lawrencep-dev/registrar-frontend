@@ -1,0 +1,227 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+    font-family: 'DM-Sans', 'Plus Jakarta Sans';
+}
+body{
+    display:flex;
+    height:100vh;
+    width: 100%;
+}
+.side-nav{
+    width:100%;
+    max-width: 200px;
+    background-color: #0a1f44;
+    padding:10px 12px;
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+}
+.logo-side-nav-container{
+    display:flex;
+    align-items: center;
+    gap:12px;
+    border-bottom:0.50px solid rgb(127, 128, 129);
+    padding-bottom: 20px;
+}
+.nav-logo-image{
+    height: 40px;
+    width: 40px;
+    background-color: #8198c4;
+    padding:3px 5px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+.lcup-text-nav-header{
+    color:#fff;
+}
+.lcup-text-nav-supporting-text{
+    font-size:0.65rem;
+    color:gray;
+    font-weight:600
+}
+.list-nav{
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+    cursor: pointer;
+}
+.nav-name{
+    color:gray;
+    font-size:0.75rem;
+    list-style: none;
+    font-weight: 600;
+    display:flex;
+    align-items: flex-start;
+    gap:12px;
+    padding:10px 12px;
+}
+.nav-name i{
+    font-size:1rem;
+}
+.nav-name a{
+    display:contents;
+    color:inherit;
+    text-decoration:none;
+}
+.active{
+    color:#fff;
+    background-color:#113060;
+    border-radius: 12px;
+}
+.container-ul-footer{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height:100%;
+    max-height: 750px;
+}
+.nav-footer{
+    display:flex;
+    flex-direction: column;
+    gap:12px;
+}
+.help-support-text{
+    font-size:0.75rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    color:#8ba4ca;
+}
+.contact-text{
+    font-size:0.75rem;
+    color:gray;
+}
+.dash-dashboard{
+    flex:1;
+    min-width:0;
+    height:100vh;
+    overflow-y:auto;
+    background:#f5f7fb;
+    color:#1e293b;
+}
+.dash-content{
+    width:100%;
+    max-width:1440px;
+    margin:0 auto;
+    padding:32px 36px;
+}
+.dash-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:30px;
+}
+.dash-title{
+    color:#202c40;
+    font-size:1.55rem;
+    line-height:1.25;
+    font-weight:700;
+}
+.dash-subtitle{
+    margin-top:8px;
+    color:#64748b;
+    font-size:0.8rem;
+}
+.dash-user-card{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-shrink:0;
+    min-width:172px;
+    padding:9px 12px;
+    border:1px solid #dce4ef;
+    border-radius:7px;
+    background:#fff;
+}
+.dash-avatar{
+    display:grid;
+    place-items:center;
+    width:32px;
+    height:32px;
+    border-radius:4px;
+    background:#e5efff;
+    color:#2563eb;
+    font-size:0.7rem;
+    font-weight:700;
+}
+.dash-user-details{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    min-width:0;
+}
+.dash-user-details strong{
+    color:#263449;
+    font-size:0.65rem;
+    white-space:nowrap;
+}
+.dash-user-details span{
+    color:#718096;
+    font-size:0.6rem;
+}
+.dash-panel{
+    min-width:0;
+    min-height:344px;
+    padding:20px 21px;
+    border:1px solid #dce4ef;
+    border-radius:24px;
+    background:#fff;
+}
+.dash-panel-title{
+    color:#273449;
+    font-size:0.82rem;
+    font-weight:700;
+}
+.dash-pay-button{
+    width:100%;
+    min-height:42px;
+    margin-top:36px;
+    border:0;
+    border-radius:5px;
+    background:#2563eb;
+    color:#fff;
+    font:inherit;
+    font-size:0.68rem;
+    font-weight:700;
+    cursor:pointer;
+}
+.dash-pay-button:hover{
+    background:#1d4ed8;
+}
+.dash-pay-button:focus-visible{
+    outline:3px solid #93c5fd;
+    outline-offset:3px;
+}
+@media (max-width:1000px){
+    .dash-content{
+        padding:28px 24px;
+    }
+    .dash-panel{
+        padding:18px 16px;
+    }
+}
+@media (max-width:760px){
+    .dash-header{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+    .dash-user-card{
+        align-self:flex-start;
+    }
+    .dash-panel{
+        min-height:0;
+    }
+}
+@media (max-width:480px){
+    .dash-content{
+        padding:22px 16px;
+    }
+    .dash-title{
+        font-size:1.35rem;
+    }
+    .dash-panel{
+        padding:18px 14px;
+    }
+}

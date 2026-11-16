@@ -1,0 +1,328 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+    font-family: 'DM-Sans', 'Plus Jakarta Sans';
+}
+body{
+    display:flex;
+    height:100vh;
+    width: 100%;
+}
+.side-nav{
+    width:100%;
+    max-width: 200px;
+    background-color: #0a1f44;
+    padding:10px 12px;
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+}
+.logo-side-nav-container{
+    display:flex;
+    align-items: center;
+    gap:12px;
+    border-bottom:0.50px solid rgb(127, 128, 129);
+    padding-bottom: 20px;
+}
+.nav-logo-image{
+    height: 40px;
+    width: 40px;
+    background-color: #8198c4;
+    padding:3px 5px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+.lcup-text-nav-header{
+    color:#fff;
+}
+.lcup-text-nav-supporting-text{
+    font-size:0.65rem;
+    color:gray;
+    font-weight:600
+}
+
+
+/* list nav */
+.list-nav{
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+}
+.nav-name{
+    color:gray;
+    font-size:0.75rem;
+    list-style: none;
+    font-weight: 600;
+    display:flex;
+    align-items: flex-start;
+    gap:12px;
+    padding:10px 12px;
+}
+.nav-name i{
+    font-size:1rem;
+}
+.active{
+    color:#fff;
+    background-color:#113060;
+    border-radius: 12px;
+}
+.container-ul-footer{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height:100%;
+    max-height: 750px;
+}
+.nav-footer{
+    display:flex;
+    flex-direction: column;
+    gap:12px;
+}
+.help-support-text{
+    font-size:0.75rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    color:#8ba4ca;
+}
+.contact-text{
+    font-size:0.75rem;
+    color:gray;
+}
+.acct-payment-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(270px, 0.9fr);
+    align-items: start;
+    gap: 23px;
+}
+
+.acct-details-card,
+.acct-summary-card,
+.acct-overview-card,
+.acct-payment-info-card {
+    min-width: 0;
+    border: 1px solid #dbe4f1;
+    border-radius: 24px;
+    background: #fff;
+}
+
+.acct-details-card {
+    padding: 20px 24px 30px;
+}
+
+.acct-details-card h2,
+.acct-summary-card h2,
+.acct-overview-card h2,
+.acct-payment-info-card h2 {
+    color: #25334a;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.acct-card-intro,
+.acct-summary-label,
+.acct-fee-due,
+.acct-summary-note {
+    color: #71819d;
+    font-size: 10px;
+}
+
+.acct-card-intro {
+    margin: 15px 0 20px;
+}
+
+.acct-fee-fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.acct-visually-hidden {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.acct-fee-list {
+    display: grid;
+    gap: 10px;
+}
+
+.acct-fee-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 62px;
+    padding: 10px 14px;
+    border: 1px solid #dce5f1;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.acct-fee-option.acct-fee-selected {
+    border-color: #2563eb;
+    background: #eff4fd;
+}
+
+.acct-fee-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.acct-fee-name,
+.acct-fee-amount {
+    color: #25334a;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.acct-fee-choice {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 7px;
+}
+
+.acct-fee-radio {
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    accent-color: #2563eb;
+}
+
+.acct-fields-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 26px;
+}
+
+.acct-field-group {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+}
+
+.acct-field-group label {
+    color: #71819d;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.acct-field-group input,
+.acct-field-group select {
+    width: 100%;
+    height: 42px;
+    min-width: 0;
+    padding: 0 12px;
+    border: 1px solid #dce5f1;
+    border-radius: 5px;
+    color: #25334a;
+    background: #fff;
+    font: inherit;
+    font-size: 11px;
+}
+
+.acct-right-panels {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+}
+
+.acct-summary-card,
+.acct-overview-card,
+.acct-payment-info-card {
+    padding: 18px 20px;
+}
+
+.acct-summary-card h2,
+.acct-overview-card h2,
+.acct-payment-info-card h2 {
+    margin-bottom: 20px;
+}
+
+.acct-summary-fee,
+.acct-summary-total,
+.acct-overview-total {
+    display: grid;
+    gap: 10px;
+}
+
+.acct-summary-fee strong,
+.acct-overview-total strong {
+    color: #25334a;
+    font-size: 14px;
+}
+
+.acct-summary-total {
+    margin-top: 22px;
+}
+
+.acct-summary-total strong {
+    color: #172a4a;
+    font-size: 20px;
+}
+
+.acct-continue-button {
+    width: 100%;
+    min-height: 42px;
+    margin-top: 18px;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    background: #2563eb;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.acct-summary-note {
+    margin: 12px 4px 0;
+    line-height: 1.5;
+}
+
+.acct-overview-details,
+.acct-payment-info-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #e8edf5;
+    color: #71819d;
+    font-size: 10px;
+}
+
+.acct-overview-detail strong,
+.acct-payment-info-row strong {
+    color: #25334a;
+    text-align: right;
+}
+
+.payment-error {
+    margin-top: 12px;
+    color: #b42318;
+    font-size: 12px;
+}
+
+@media (max-width: 900px) {
+    .acct-payment-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 620px) {
+    .acct-fields-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

@@ -1,0 +1,111 @@
+.review-form {
+    margin: 0;
+}
+
+.review-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(250px, 1fr);
+    align-items: start;
+    gap: 18px;
+}
+
+.pay-info {
+    min-height: 420px;
+    padding: 22px 26px;
+    border-radius: 36px;
+}
+
+.pay-list {
+    margin-top: 18px;
+    padding: 0 12px;
+}
+
+.pay-row {
+    display: grid;
+    grid-template-columns: minmax(110px, 1fr) 2fr;
+    align-items: center;
+    gap: 16px;
+    min-height: 62px;
+    border-bottom: 1px solid #e7edf5;
+}
+
+.pay-row dt {
+    color: #718096;
+    font-size: 0.6rem;
+}
+
+.pay-row dd {
+    color: #142849;
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+.pay-total {
+    min-height: 0;
+    padding: 22px 26px;
+    border-radius: 36px;
+}
+
+.pay-label {
+    margin-top: 22px;
+    color: #718096;
+    font-size: 0.6rem;
+}
+
+.pay-amount {
+    margin-top: 8px;
+    color: #142849;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.pay-fee {
+    margin-top: 8px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e7edf5;
+    color: #142849;
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+.pay-grand {
+    margin-top: 8px;
+    color: #142849;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.pay-confirm {
+    margin-top: 16px;
+}
+
+.pay-terms {
+    margin-top: 14px;
+    color: #64748b;
+    font-size: 0.58rem;
+}
+
+.pay-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 18px;
+    color: #64748b;
+    font-size: 0.6rem;
+    cursor: pointer;
+}
+
+.pay-check input {
+    margin: 0;
+}
+
+@media (max-width: 760px) {
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pay-info {
+        min-height: 0;
+    }
+}
