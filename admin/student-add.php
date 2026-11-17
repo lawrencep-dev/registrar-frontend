@@ -10,14 +10,20 @@ $firstName = '';
 $lastName = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!admin_csrf_verify(isset($_POST['csrf_token']) ? (string)$_POST['csrf_token'] : null)) {
+    $csrfToken = $_POST['csrf_token'] ?? null;
+    if (!admin_csrf_verify(is_string($csrfToken) ? $csrfToken : null)) {
         $errors[] = 'Your request could not be verified. Reload the page and try again.';
     } else {
-        $studentNumber = trim((string)($_POST['student_number'] ?? ''));
-        $email = strtolower(trim((string)($_POST['email'] ?? '')));
-        $firstName = trim((string)($_POST['first_name'] ?? ''));
-        $lastName = trim((string)($_POST['last_name'] ?? ''));
-        $temporaryPassword = (string)($_POST['temporary_password'] ?? '');
+        $studentNumberInput = $_POST['student_number'] ?? '';
+        $emailInput = $_POST['email'] ?? '';
+        $firstNameInput = $_POST['first_name'] ?? '';
+        $lastNameInput = $_POST['last_name'] ?? '';
+        $temporaryPasswordInput = $_POST['temporary_password'] ?? '';
+        $studentNumber = is_string($studentNumberInput) ? trim($studentNumberInput) : '';
+        $email = is_string($emailInput) ? strtolower(trim($emailInput)) : '';
+        $firstName = is_string($firstNameInput) ? trim($firstNameInput) : '';
+        $lastName = is_string($lastNameInput) ? trim($lastNameInput) : '';
+        $temporaryPassword = is_string($temporaryPasswordInput) ? $temporaryPasswordInput : '';
         unset($_POST['temporary_password']);
         $passwordLength = preg_match_all('/./us', $temporaryPassword, $passwordCharacters);
         unset($passwordCharacters);

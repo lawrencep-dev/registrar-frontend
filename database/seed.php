@@ -19,6 +19,7 @@ $students = [
         'first_name' => 'Maria',
         'last_name' => 'Santos',
     ],
+
 ];
 
 $feeTypes = [

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/admin_auth.php';
+require_admin();
 
 $adminId = (int)($_SESSION[ADMIN_SESSION_ID_KEY] ?? 0);
 if ($adminId > 0) {

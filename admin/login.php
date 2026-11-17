@@ -16,13 +16,16 @@ if (!$isLockedOut && $lockoutUntil !== 0) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!admin_csrf_verify(isset($_POST['csrf_token']) ? (string)$_POST['csrf_token'] : null)) {
+    $csrfToken = $_POST['csrf_token'] ?? null;
+    if (!admin_csrf_verify(is_string($csrfToken) ? $csrfToken : null)) {
         $loginError = 'Invalid credentials';
     } elseif ($isLockedOut) {
         $loginError = 'Invalid credentials';
     } else {
-        $email = trim((string)($_POST['email'] ?? ''));
-        $password = (string)($_POST['password'] ?? '');
+        $emailInput = $_POST['email'] ?? '';
+        $passwordInput = $_POST['password'] ?? '';
+        $email = is_string($emailInput) ? trim($emailInput) : '';
+        $password = is_string($passwordInput) ? $passwordInput : '';
         $admin = false;
 
         try {

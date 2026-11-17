@@ -25,11 +25,14 @@ if (is_string($status) && isset($statusMessages[$status])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!admin_csrf_verify(isset($_POST['csrf_token']) ? (string)$_POST['csrf_token'] : null)) {
+    $csrfToken = $_POST['csrf_token'] ?? null;
+    if (!admin_csrf_verify(is_string($csrfToken) ? $csrfToken : null)) {
         $errors[] = 'Your request could not be verified. Reload the page and try again.';
     } else {
-        $action = (string)($_POST['action'] ?? '');
-        $temporaryPassword = (string)($_POST['temporary_password'] ?? '');
+        $actionInput = $_POST['action'] ?? '';
+        $temporaryPasswordInput = $_POST['temporary_password'] ?? '';
+        $action = is_string($actionInput) ? $actionInput : '';
+        $temporaryPassword = is_string($temporaryPasswordInput) ? $temporaryPasswordInput : '';
         unset($_POST['temporary_password']);
         $passwordLength = $action === 'reset_password'
             ? preg_match_all('/./us', $temporaryPassword, $passwordCharacters)
