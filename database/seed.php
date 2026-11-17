@@ -13,11 +13,18 @@ $students = [
         'first_name' => 'Lei Justin',
         'last_name' => 'Clemente',
     ],
+    
     [
-        'student_number' => '2026-001285',
-        'email' => 'maria.santos@example.com',
-        'first_name' => 'Maria',
-        'last_name' => 'Santos',
+        'student_number' => '2026-001286',
+        'email' => 'catu_ryan@gmail.com',
+        'first_name' => 'Ryan',
+        'last_name' => 'Catu',
+    ],
+    [
+        'student_number' => '2026-001287',
+        'email' => 'arpista_michael@gmail.com',
+        'first_name' => 'Michael',
+        'last_name' => 'Arpista',
     ],
 ];
 
