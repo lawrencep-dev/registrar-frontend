@@ -93,6 +93,7 @@ function admin_audit_log(
         'student_id',
         'fee_type_id',
         'charge_id',
+        'payment_id',
         'amount',
         'previous_amount',
         'new_amount',
@@ -103,6 +104,11 @@ function admin_audit_log(
         'previous_default_amount',
         'created_count',
         'skipped_count',
+        'from_date',
+        'to_date',
+        'status',
+        'search_applied',
+        'search_length',
     ];
     $safeDetails = [];
     foreach ($allowedDetailKeys as $key) {
