@@ -44,17 +44,83 @@ function admin_csrf_verify(?string $token): bool {
         && hash_equals($_SESSION[ADMIN_CSRF_SESSION_KEY], $token);
 }
 
-function admin_audit_log(int $adminId, string $action, ?string $targetType = null, ?int $targetId = null): void {
+function admin_positive_int(mixed $value): ?int {
+    if (!is_string($value) && !is_int($value)) {
+        return null;
+    }
+
+    $validated = filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+    return $validated === false ? null : $validated;
+}
+
+function admin_decimal_to_cents(mixed $value): ?int {
+    if (!is_string($value) && !is_int($value)) {
+        return null;
+    }
+
+    if (!preg_match('/^(?:\d{1,8}(?:\.\d{1,2})?|\.\d{1,2})$/D', (string)$value)) {
+        return null;
+    }
+
+    $parts = explode('.', (string)$value, 2);
+    $whole = $parts[0] === '' ? '0' : $parts[0];
+    $fraction = $parts[1] ?? '';
+    return ((int)$whole * 100) + (int)str_pad($fraction, 2, '0');
+}
+
+function admin_amount_to_cents(mixed $value): ?int {
+    $cents = admin_decimal_to_cents($value);
+    return $cents !== null && $cents > 0 ? $cents : null;
+}
+
+function admin_is_valid_date(mixed $value): bool {
+    if (!is_string($value) || !preg_match('/^\d{4}-\d{2}-\d{2}$/D', $value)) {
+        return false;
+    }
+
+    return checkdate((int)substr($value, 5, 2), (int)substr($value, 8, 2), (int)substr($value, 0, 4));
+}
+
+function admin_audit_log(
+    int $adminId,
+    string $action,
+    ?string $targetType = null,
+    ?int $targetId = null,
+    array $details = []
+): void {
     require_once __DIR__ . '/db.php';
+    $allowedDetailKeys = [
+        'student_id',
+        'fee_type_id',
+        'charge_id',
+        'amount',
+        'previous_amount',
+        'new_amount',
+        'paid_amount',
+        'due_date',
+        'previous_due_date',
+        'default_amount',
+        'previous_default_amount',
+        'created_count',
+        'skipped_count',
+    ];
+    $safeDetails = [];
+    foreach ($allowedDetailKeys as $key) {
+        if (array_key_exists($key, $details) && (is_string($details[$key]) || is_int($details[$key]))) {
+            $safeDetails[$key] = $details[$key];
+        }
+    }
+    $encodedDetails = $safeDetails === [] ? null : json_encode($safeDetails, JSON_THROW_ON_ERROR);
     $statement = db()->prepare(
-        'INSERT INTO admin_audit_log (admin_id, action, target_type, target_id)
-         VALUES (:admin_id, :action, :target_type, :target_id)'
+        'INSERT INTO admin_audit_log (admin_id, action, target_type, target_id, details)
+         VALUES (:admin_id, :action, :target_type, :target_id, :details)'
     );
     $statement->execute([
         'admin_id' => $adminId,
         'action' => $action,
         'target_type' => $targetType,
         'target_id' => $targetId,
+        'details' => $encodedDetails,
     ]);
 }
 

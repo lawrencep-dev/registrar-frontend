@@ -281,7 +281,8 @@ body {
 }
 
 .admin-search-controls input,
-.admin-form-field input {
+.admin-form-field input,
+.admin-form-field select {
     width: 100%;
     min-height: 42px;
     padding: 9px 12px;
@@ -294,7 +295,8 @@ body {
 }
 
 .admin-search-controls input:focus-visible,
-.admin-form-field input:focus-visible {
+.admin-form-field input:focus-visible,
+.admin-form-field select:focus-visible {
     border-color: #2563eb;
     outline: 3px solid rgb(37 99 235 / 16%);
 }
@@ -352,7 +354,17 @@ body {
 .admin-form-actions {
     display: flex;
     justify-content: flex-end;
+    gap: 9px;
     margin-top: 24px;
+}
+
+.admin-action-cell {
+    white-space: nowrap;
+}
+
+.admin-action-cell form {
+    display: inline-flex;
+    margin-left: 6px;
 }
 
 .admin-student-details dl {
