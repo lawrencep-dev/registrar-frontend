@@ -207,6 +207,200 @@ body {
     font-size: 13px;
 }
 
+.admin-success {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    border: 1px solid #b7dfc4;
+    border-radius: 10px;
+    background: #f0fff4;
+    color: #276749;
+    font-size: 13px;
+}
+
+.admin-button {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    border: 1px solid #2563eb;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.admin-button:hover {
+    border-color: #1d4ed8;
+    background: #1d4ed8;
+}
+
+.admin-button-secondary {
+    border-color: #dce4ef;
+    background: #fff;
+    color: #263449;
+}
+
+.admin-button-secondary:hover {
+    border-color: #b8c5d8;
+    background: #f8faff;
+    color: #17243d;
+}
+
+.admin-button-danger {
+    border-color: #c53030;
+    background: #c53030;
+}
+
+.admin-button-danger:hover {
+    border-color: #9b2c2c;
+    background: #9b2c2c;
+}
+
+.admin-search-form {
+    margin-bottom: 18px;
+}
+
+.admin-search-form > label,
+.admin-form-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #263650;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-search-controls {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.admin-search-controls input,
+.admin-form-field input {
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 12px;
+    border: 1px solid #dce4ef;
+    border-radius: 8px;
+    background: #fff;
+    color: #17243d;
+    font: inherit;
+    font-size: 13px;
+}
+
+.admin-search-controls input:focus-visible,
+.admin-form-field input:focus-visible {
+    border-color: #2563eb;
+    outline: 3px solid rgb(37 99 235 / 16%);
+}
+
+.admin-status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.admin-status-active {
+    background: #e6f7ed;
+    color: #276749;
+}
+
+.admin-status-inactive {
+    background: #edf0f5;
+    color: #596579;
+}
+
+.admin-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 18px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.admin-pagination > div {
+    display: flex;
+    gap: 8px;
+}
+
+.admin-form-panel {
+    margin-bottom: 20px;
+}
+
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.admin-form-field small {
+    display: block;
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 11px;
+}
+
+.admin-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.admin-student-details dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 24px;
+    margin: 0;
+}
+
+.admin-student-details dl > div {
+    min-width: 0;
+}
+
+.admin-student-details dt {
+    margin-bottom: 6px;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.admin-student-details dd {
+    margin: 0;
+    color: #263449;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.admin-inline-actions {
+    margin-top: 22px;
+}
+
+.admin-inline-actions form,
+.admin-password-reset-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.admin-password-reset-form .admin-form-field {
+    width: min(100%, 420px);
+}
+
+.admin-student-details + .admin-form-panel,
+.admin-form-panel + .admin-panel {
+    margin-top: 20px;
+}
+
 .admin-login .login-left {
     background-color: #0a1f44;
 }
@@ -250,6 +444,25 @@ body {
 
     .admin-stat-grid {
         grid-template-columns: 1fr;
+    }
+
+    .admin-form-grid,
+    .admin-student-details dl {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-search-controls {
+        align-items: stretch;
+        flex-wrap: wrap;
+    }
+
+    .admin-search-controls input {
+        flex-basis: 100%;
+    }
+
+    .admin-password-reset-form {
+        align-items: stretch;
+        flex-direction: column;
     }
 
     .admin-content {

@@ -14,7 +14,37 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 }
 
 function require_login(): void {
-    if (!isset($_SESSION['student_id']) || (int)$_SESSION['student_id'] < 1) {
+    $studentId = (int)($_SESSION['student_id'] ?? 0);
+    if ($studentId < 1) {
+        header('Location: ../login.php');
+        exit;
+    }
+
+    try {
+        require_once __DIR__ . '/db.php';
+        $statement = db()->prepare('SELECT is_active FROM students WHERE id = :student_id LIMIT 1');
+        $statement->execute(['student_id' => $studentId]);
+        $isActive = $statement->fetchColumn();
+    } catch (Throwable $exception) {
+        error_log('LCUPAY student session verification failed: ' . $exception->getMessage());
+        http_response_code(500);
+        exit('Unable to verify your student session.');
+    }
+
+    if ($isActive === false || (int)$isActive !== 1) {
+        $_SESSION = [];
+        $cookie = session_get_cookie_params();
+        if (ini_get('session.use_cookies')) {
+            setcookie(session_name(), '', [
+                'expires' => time() - 42000,
+                'path' => $cookie['path'],
+                'domain' => $cookie['domain'],
+                'secure' => $cookie['secure'],
+                'httponly' => $cookie['httponly'],
+                'samesite' => 'Lax',
+            ]);
+        }
+        session_destroy();
         header('Location: ../login.php');
         exit;
     }
