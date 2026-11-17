@@ -9,6 +9,28 @@ function money(float|int|string $amount): string {
     return '₱ ' . number_format((float)$amount, 2);
 }
 
+function amount_to_cents(string|int $amount): ?int {
+    $value = trim(str_replace(['₱', ',', ' '], '', (string)$amount));
+    if (!preg_match('/^(\d+)(?:\.(\d{1,2}))?$/D', $value, $matches)) {
+        return null;
+    }
+
+    $whole = ltrim($matches[1], '0');
+    $whole = $whole === '' ? '0' : $whole;
+    if (strlen($whole) > 8) {
+        return null;
+    }
+
+    $fraction = str_pad($matches[2] ?? '', 2, '0');
+    return ((int)$whole * 100) + (int)$fraction;
+}
+
+function decimal_from_cents(int $cents): string {
+    $whole = intdiv($cents, 100);
+    $fraction = $cents % 100;
+    return $whole . '.' . str_pad((string)$fraction, 2, '0', STR_PAD_LEFT);
+}
+
 function current_student(): ?array {
     static $student;
     static $loaded = false;
@@ -49,14 +71,14 @@ function current_student(): ?array {
     return $student;
 }
 
-function remaining_balance(int $chargeId): float {
+function remaining_balance(int $chargeId): string {
     $student = current_student();
     if (!$student) {
-        return 0.0;
+        return '0.00';
     }
 
     $statement = db()->prepare(
-        'SELECT sc.amount - COALESCE(SUM(p.amount), 0) AS remaining_balance
+        'SELECT GREATEST(sc.amount - COALESCE(SUM(p.amount), 0), 0) AS remaining_balance
          FROM student_charges sc
          LEFT JOIN payments p
            ON p.student_charge_id = sc.id AND p.status = \'paid\'
@@ -68,7 +90,7 @@ function remaining_balance(int $chargeId): float {
         'student_id' => $student['id'],
     ]);
     $balance = $statement->fetchColumn();
-    return $balance === false ? 0.0 : max(0.0, (float)$balance);
+    return $balance === false ? '0.00' : (string)$balance;
 }
 
 function student_balance_summary(int $studentId): array {
@@ -125,5 +147,10 @@ function charge_status_label(string $status): string {
 
 function peso($amount)
 {
-    return '₱ ' . number_format((float) $amount, 2);
+    $cents = amount_to_cents((string)$amount);
+    if ($cents === null) {
+        return '₱ 0.00';
+    }
+
+    return '₱ ' . number_format(intdiv($cents, 100)) . '.' . str_pad((string)($cents % 100), 2, '0', STR_PAD_LEFT);
 }
