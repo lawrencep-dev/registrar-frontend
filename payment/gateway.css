@@ -1,0 +1,124 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f1f5f9;
+    color: #172b4d;
+    font-family: Arial, sans-serif;
+}
+
+.gw-page {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    padding: 24px;
+}
+
+.gw-card {
+    width: min(100%, 440px);
+    overflow: hidden;
+    border: 1px solid #dce4ee;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 16px 40px rgb(23 43 77 / 10%);
+}
+
+.gw-header {
+    padding: 24px 28px;
+    background: #234a78;
+    color: #fff;
+}
+
+.gw-provider {
+    margin: 0;
+    font-size: 1.15rem;
+}
+
+.gw-notice {
+    margin: 8px 0 0;
+    color: #e0eaf5;
+    font-size: 0.8rem;
+}
+
+.gw-content {
+    padding: 28px;
+}
+
+.gw-merchant-label {
+    margin: 0 0 6px;
+    color: #65758b;
+    font-size: 0.8rem;
+}
+
+.gw-merchant {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.gw-details {
+    margin: 24px 0;
+    border-top: 1px solid #e3e9f0;
+}
+
+.gw-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #e3e9f0;
+}
+
+.gw-row dt {
+    color: #65758b;
+}
+
+.gw-row dd {
+    margin: 0;
+    text-align: right;
+    font-weight: 700;
+}
+
+.gw-authorize-form {
+    margin: 0;
+}
+
+.gw-authorize-button {
+    width: 100%;
+    min-height: 46px;
+    border: 0;
+    border-radius: 7px;
+    background: #234a78;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.gw-authorize-button:disabled {
+    background: #718096;
+    cursor: wait;
+}
+
+.gw-processing {
+    min-height: 1.2em;
+    margin: 10px 0 0;
+    color: #52657e;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.gw-cancel {
+    display: block;
+    margin-top: 16px;
+    color: #234a78;
+    text-align: center;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.gw-cancel:hover {
+    text-decoration: underline;
+}

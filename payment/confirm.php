@@ -10,6 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+$paymentMethod = $_SESSION['payment_method'] ?? null;
+if (!is_string($paymentMethod) || !in_array($paymentMethod, ['GCash (demo)', 'Bank transfer (demo)'], true)) {
+    header('Location: review.php', true, 303);
+    exit;
+}
+
 $connection = null;
 
 try {
@@ -85,7 +91,7 @@ try {
                 'reference_number' => $reference,
                 'amount' => decimal_from_cents($draft['amount_cents']),
                 'convenience_fee' => decimal_from_cents($convenienceFeeCents),
-                'payment_method' => 'GCash (demo)',
+                'payment_method' => $paymentMethod,
             ]);
             $paymentStored = true;
             break;
@@ -113,7 +119,7 @@ try {
     ]);
 
     $connection->commit();
-    unset($_SESSION['payment_draft'], $_SESSION['payment_error']);
+    unset($_SESSION['payment_draft'], $_SESSION['payment_method'], $_SESSION['payment_error']);
     header('Location: success.php?ref=' . rawurlencode($reference), true, 303);
     exit;
 } catch (Throwable $exception) {

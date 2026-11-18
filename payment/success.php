@@ -11,7 +11,7 @@ if ($reference === '') {
 }
 
 $paymentStatement = db()->prepare(
-    'SELECT p.reference_number, p.amount, p.status, p.created_at, ft.name AS fee_name
+    'SELECT p.reference_number, p.amount, p.status, p.payment_method, p.created_at, ft.name AS fee_name
      FROM payments p
      JOIN student_charges sc ON sc.id = p.student_charge_id
      JOIN fee_types ft ON ft.id = sc.fee_type_id
@@ -59,6 +59,7 @@ if (!$payment) {
                     <div class="pay-row"><dt>Reference</dt><dd><?= e((string)$payment['reference_number']) ?></dd></div>
                     <div class="pay-row"><dt>Payment for</dt><dd><?= e((string)$payment['fee_name']) ?></dd></div>
                     <div class="pay-row"><dt>Amount</dt><dd><?= e(peso((string)$payment['amount'])) ?></dd></div>
+                    <div class="pay-row"><dt>Payment method</dt><dd><?= e((string)$payment['payment_method']) ?></dd></div>
                     <div class="pay-row"><dt>Status</dt><dd><?= e(ucfirst((string)$payment['status'])) ?></dd></div>
                     <div class="pay-row"><dt>Date</dt><dd><?= e(date('M d, Y g:i A', strtotime((string)$payment['created_at']))) ?></dd></div>
                 </dl>

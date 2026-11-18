@@ -38,6 +38,11 @@ if (!$charge || $remainingCents === null || $draft['amount_cents'] < 100 || $dra
 }
 $error = isset($_SESSION['payment_error']) ? 'Payment could not be completed. Please review and try again.' : '';
 unset($_SESSION['payment_error']);
+$allowedPaymentMethods = ['GCash (demo)', 'Bank transfer (demo)'];
+$selectedPaymentMethod = $_SESSION['payment_method'] ?? $allowedPaymentMethods[0];
+if (!is_string($selectedPaymentMethod) || !in_array($selectedPaymentMethod, $allowedPaymentMethods, true)) {
+    $selectedPaymentMethod = $allowedPaymentMethods[0];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +69,7 @@ unset($_SESSION['payment_error']);
                     <span class="dash-user-details"><strong><?= e($student['name'] ?? '') ?></strong><span>Student account</span></span>
                 </div>
             </header>
-            <form method="post" action="confirm.php" class="review-form">
+            <form method="post" action="gateway.php" class="review-form">
                 <input type="hidden" name="csrf" value="<?= e($csrfToken) ?>">
                 <div class="review-grid">
                     <section class="dash-panel pay-info" aria-label="Payment information">
@@ -73,7 +78,13 @@ unset($_SESSION['payment_error']);
                             <div class="pay-row"><dt>Student name</dt><dd><?= e($student['name'] ?? '') ?></dd></div>
                             <div class="pay-row"><dt>Student ID</dt><dd><?= e($student['student_number'] ?? '') ?></dd></div>
                             <div class="pay-row"><dt>Payment for</dt><dd><?= e((string)$charge['fee_name']) ?></dd></div>
-                            <div class="pay-row"><dt>Payment method</dt><dd>GCash (demo)</dd></div>
+                            <div class="pay-row">
+                                <dt>Payment method</dt>
+                                <dd>
+                                    <label><input type="radio" name="payment_method" value="GCash (demo)"<?= $selectedPaymentMethod === 'GCash (demo)' ? ' checked' : '' ?>> GCash (demo)</label><br>
+                                    <label><input type="radio" name="payment_method" value="Bank transfer (demo)"<?= $selectedPaymentMethod === 'Bank transfer (demo)' ? ' checked' : '' ?>> Bank transfer (demo)</label>
+                                </dd>
+                            </div>
                             <div class="pay-row"><dt>Due date</dt><dd><?= e(date('M d, Y', strtotime((string)$charge['due_date']))) ?></dd></div>
                         </dl>
                     </section>
@@ -89,7 +100,7 @@ unset($_SESSION['payment_error']);
                         </section>
                         <?php if ($error !== ''): ?><p class="pay-terms" role="alert"><?= e($error) ?></p><?php endif; ?>
                         <label class="pay-check"><input type="checkbox" name="confirm" value="1" required> I confirm that the payment details above are correct.</label>
-                        <button class="dash-pay-button pay-confirm" type="submit">Confirm payment</button>
+                        <button class="dash-pay-button pay-confirm" type="submit">Continue to payment</button>
                         <p class="pay-terms">This demo marks confirmed payments as paid.</p>
                     </aside>
                 </div>

@@ -318,6 +318,17 @@ body {
     text-decoration: none;
 }
 
+.login-success {
+    margin: 0 0 16px;
+    padding: 10px 12px;
+    border: 1px solid #b7ddc4;
+    border-radius: 8px;
+    background: #edf8f1;
+    color: #21643a;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
 .login-footer {
     margin: 0 0 0 19px;
     color: #687995;

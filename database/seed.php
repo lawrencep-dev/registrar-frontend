@@ -26,6 +26,7 @@ $students = [
         'first_name' => 'Michael',
         'last_name' => 'Arpista',
     ],
+
 ];
 
 $feeTypes = [

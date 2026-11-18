@@ -3,6 +3,8 @@ require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/db.php';
 
 $loginError = '';
+$registrationSuccess = (string)($_SESSION['registration_success'] ?? '');
+unset($_SESSION['registration_success']);
 $lockoutUntil = (int)($_SESSION['login_lockout_until'] ?? 0);
 $isLockedOut = $lockoutUntil > time();
 
@@ -124,6 +126,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php if ($loginError !== ''): ?>
                         <p role="alert"><?= htmlspecialchars($loginError, ENT_QUOTES, 'UTF-8') ?></p>
                     <?php endif; ?>
+                    <?php if ($registrationSuccess !== ''): ?>
+                        <p class="login-success" role="status"><?= htmlspecialchars($registrationSuccess, ENT_QUOTES, 'UTF-8') ?></p>
+                    <?php endif; ?>
                     <div class="login-field">
                         <label for="login-student-id">Student ID / Email</label>
                         <input id="login-student-id" type="text" name="student_id" placeholder="Enter your student ID or email" autocomplete="username">
@@ -143,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <button class="login-submit" type="submit">Sign in</button>
-                    <p class="login-register">New to the portal? <a href="#">Contact the registrar</a></p>
+                    <p class="login-register">New to the portal? <a href="register.php">Create an account</a></p>
                 </form>
             </div>
 
